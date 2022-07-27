@@ -343,14 +343,14 @@ def _dense_box_regression_loss(
             beta=smooth_l1_beta,
             reduction="sum",
         )
-    elif box_reg_loss_type == "smooth_l1":
+    elif box_reg_loss_type == "smooth_l1_mean":
         gt_anchor_deltas = [box2box_transform.get_deltas(anchors, k) for k in gt_boxes]
         gt_anchor_deltas = torch.stack(gt_anchor_deltas)  # (N, R, 4)
         loss_box_reg = smooth_l1_loss(
             cat(pred_anchor_deltas, dim=1)[fg_mask],
             gt_anchor_deltas[fg_mask],
             beta=smooth_l1_beta,
-            reduction="sum",
+            reduction="mean",
         )
     elif box_reg_loss_type == "giou":
         pred_boxes = [
