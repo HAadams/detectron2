@@ -351,7 +351,7 @@ class BasicStem(CNNBlockBase):
             bias=False,
             norm=get_norm(norm, out_channels),
         )
-        weight_init.c2_msrax_fill(self.conv1)
+        weight_init.c2_msra_fill(self.conv1)
 
     def forward(self, x):
         x = self.conv1(x)
